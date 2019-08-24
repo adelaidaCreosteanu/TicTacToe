@@ -1,3 +1,5 @@
+package game;
+
 public class Board {
     private int[][] grid; // 0 means empty; 1,2,3 are the three players
 

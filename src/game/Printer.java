@@ -1,3 +1,5 @@
+package game;
+
 public class Printer {
     private int[][] grid;
 
