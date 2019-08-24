@@ -3,7 +3,9 @@ package game;
 public class Main {
     public static void main(String[] args) {
         printWelcome();
-        GameController game = new GameController();
+        Board board = new Board(3);
+        BoardPrinter printer = new BoardPrinter();
+        GameController game = new GameController(board, printer);
         game.play();
     }
 

@@ -4,11 +4,12 @@ import java.util.Scanner;
 
 public class GameController {
     private Board board;
-    private static Printer printer = new Printer();
+    private BoardPrinter printer;
     private int[] players;
 
-    public GameController() {
-        board = new Board(3);
+    public GameController(Board board, BoardPrinter printer) {
+        this.board = board;
+        this.printer = printer;
 
         players = new int[]{1, 2, 3};
     }

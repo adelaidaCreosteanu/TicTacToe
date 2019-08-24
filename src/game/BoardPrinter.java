@@ -1,9 +1,9 @@
 package game;
 
-public class Printer {
+public class BoardPrinter {
     private int[][] grid;
 
-    public Printer() {
+    public BoardPrinter() {
     }
 
     public void print(int [][] grid) {
