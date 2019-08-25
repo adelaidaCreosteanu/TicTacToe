@@ -46,25 +46,16 @@ public class GameController {
 
         while (askForInput) {
             String input = scanner.nextLine();
-            Position move = parsePlayerMove(input);
             try {
+                Position move = Position.parse(input);
                 board.addMove(players[currentP], move);
                 askForInput = false;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
-                System.out.println("Player " + players[currentP] + ", make another move!");
+                System.out.println("Player " + players[currentP] + ", make a different move!");
                 // Will ask for input again
             }
         }
-    }
-
-    private Position parsePlayerMove(String input) {
-        String[] numbers = input.split(",");
-        int x = Integer.parseInt(numbers[0].trim());
-        int y = Integer.parseInt(numbers[1].trim());
-
-        // subtract 1 because the users use 1 indexing, but the program uses 0 indexing
-        return new Position(x - 1, y - 1);
     }
 
     public void setScanner(Scanner scanner) {

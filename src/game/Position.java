@@ -18,6 +18,21 @@ public class Position {
         return y;
     }
 
+    public static Position parse(String input) {
+        String[] numbers = input.split(",");
+
+        int x = 0, y = 0;
+        try {
+            x = Integer.parseInt(numbers[0].trim());
+            y = Integer.parseInt(numbers[1].trim());
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("Please choose a position in the format: [x coordinate], [y coordinate]");
+        }
+
+        // subtract 1 because the users use 1 indexing, but the program uses 0 indexing
+        return new Position(x - 1, y - 1);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
