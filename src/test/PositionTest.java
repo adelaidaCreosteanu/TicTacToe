@@ -41,4 +41,14 @@ class PositionTest {
         }
     }
 
+    @Test
+    @DisplayName("Throw IllegalArgumentException")
+    void throwIllegalArgumentException() {
+        String[] tests = new String[]{"", "h,e,l,l,o", "1234", "hey-you"};
+
+        for (String input : tests) {
+            Executable functionCall = () -> Position.parse(input);
+            assertThrows(IllegalArgumentException.class, functionCall, "Should throw IllegalArgumentException!");
+        }
+    }
 }

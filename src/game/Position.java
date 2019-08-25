@@ -21,6 +21,9 @@ public class Position {
     public static Position parse(String input) {
         String[] numbers = input.split(",");
 
+        if (numbers.length != 2)
+            throw new IllegalArgumentException("Please choose a position in the format: [x coordinate], [y coordinate]");
+
         int x = 0, y = 0;
         try {
             x = Integer.parseInt(numbers[0].trim());
