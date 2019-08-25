@@ -8,6 +8,14 @@ public class Board {
     }
 
     public void addMove(int player, Position pos) {
+        int x = pos.getX();
+        int y = pos.getY();
+
+        if (x >= grid.length || y >= grid.length)
+            throw new IllegalArgumentException("Chosen position is out of playfield bounds!");
+        if (grid[x][y] != 0)
+            throw new IllegalArgumentException("Chosen position is already filled!");
+
         grid[pos.getX()][pos.getY()] = player;
     }
 
