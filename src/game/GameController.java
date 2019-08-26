@@ -21,24 +21,21 @@ public class GameController {
         System.out.println("First to play is player " + players[currentP]);
         showBoard();
 
-        while (!gameEnd()) {
+        while (!gameTie()) {
             System.out.println("Player " + players[currentP] + ", make your move!");
             addPlayerMove(currentP);
             showBoard();
 
-            currentP ++;
+            if (hasWon(currentP)) {
+                System.out.println("Player " + players[currentP] + " has won!");
+                break;
+            }
+
+            currentP++;
             if (currentP == players.length) currentP = 0;
         }
 
-        System.out.println("Game has ended");
-    }
-
-    private boolean gameEnd() {
-        return board.isFull();
-    }
-
-    private void showBoard() {
-        printer.print(board.getGrid());
+        System.out.println("Game over!");
     }
 
     private void addPlayerMove(int currentP) {
@@ -56,6 +53,18 @@ public class GameController {
                 // Will ask for input again
             }
         }
+    }
+
+    private boolean hasWon(int currentP) {
+        return board.hasWon(players[currentP]);
+    }
+
+    private boolean gameTie() {
+        return board.isFull();
+    }
+
+    private void showBoard() {
+        printer.print(board.getGrid());
     }
 
     public void setScanner(Scanner scanner) {
