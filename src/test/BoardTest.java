@@ -9,8 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 
 class BoardTest {
@@ -71,6 +70,49 @@ class BoardTest {
         for (int player : tests) {
             Executable functionCall = () -> board.addMove(player, new Position(0, 1));
             assertThrows(InvalidPlayerException.class, functionCall, "Should throw InvalidPlayerException!");
+
+            functionCall = () -> board.hasWon(player);
+            assertThrows(InvalidPlayerException.class, functionCall, "Should throw InvalidPlayerException!");
+        }
+    }
+
+    @Test
+    @DisplayName("hasWon true")
+    void hasWonTrue() {
+        Board board = new Board(3);
+
+        int[][][] tests = new int[4][3][3];
+        tests[0] = new int[][]{{1, 1, 1}, {2, 3, 0}, {0, 3, 2}};  // row
+        tests[1] = new int[][]{{1, 2, 3}, {1, 3, 0}, {1, 0, 2}};  // column
+        tests[2] = new int[][]{{1, 2, 3}, {2, 1, 0}, {3, 2, 1}};  // primary diagonal
+        tests[3] = new int[][]{{2, 3, 1}, {3, 1, 2}, {1, 0, 0}};  // secondary diagonal
+
+        for (int[][] grid : tests) {
+            board.setGrid(grid);
+
+            assertTrue(board.hasWon(1), "Should show win for Player 1!");
+            System.out.println("tested");
+
+            assertFalse(board.hasWon(2), "Should not show win for Player 2!");
+            assertFalse(board.hasWon(3), "Should not show win for Player 3!");
+        }
+    }
+
+    @Test
+    @DisplayName("hasWon false")
+    void hasWonFalse() {
+        Board board = new Board(3);
+
+        int[][][] tests = new int[3][][];
+        tests[0] = new int[][]{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
+        tests[1] = new int[][]{{1, 2, 2}, {2, 2, 0}, {1, 0, 2}};
+        tests[2] = new int[][]{{1, 2, 2}, {2, 1, 2}, {0, 2, 0}};
+
+        for (int[][] grid : tests) {
+            board.setGrid(grid);
+            for (int i = 1; i < 4; i++) {
+                assertFalse(board.hasWon(i), "Should not show win for Player " + i);
+            }
         }
     }
 }

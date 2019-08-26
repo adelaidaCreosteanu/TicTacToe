@@ -16,6 +16,12 @@ public class Board {
         return grid;
     }
 
+    // Only testing purpose
+    public void setGrid(int[][] newGrid) {
+        if (newGrid.length != size) throw new IllegalArgumentException("Cannot set differently sized grid!");
+        grid = newGrid;
+    }
+
     public boolean isFull() {
         boolean full = true;
 
