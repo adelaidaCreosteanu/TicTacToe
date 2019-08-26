@@ -1,6 +1,7 @@
 package test;
 
 import game.Board;
+import game.InvalidPlayerException;
 import game.Position;
 import game.PositionOutOfBoundsException;
 
@@ -43,4 +44,33 @@ class BoardTest {
         }
     }
 
+    @Test
+    @DisplayName("Throw IllegalArgumentException")
+    void throwIllegalArgumentException() {
+        Board board = new Board(6);
+
+        // Same Position object
+        Position pos = new Position(5, 5);
+        board.addMove(1, pos);
+        Executable functionCall = () -> board.addMove(1, pos);
+        assertThrows(IllegalArgumentException.class, functionCall, "Should throw IllegalArgumentException!");
+
+        // Different object with same values
+        board.addMove(2, new Position(2, 3));
+        functionCall = () -> board.addMove(3, new Position(2, 3));
+        assertThrows(IllegalArgumentException.class, functionCall, "Should throw IllegalArgumentException!");
+    }
+
+    @Test
+    @DisplayName("Throw InvalidPlayerException")
+    void throwInvalidPlayerException() {
+        Board board = new Board(4);
+
+        int[] tests = new int[]{-1, 0, 4, 30};
+
+        for (int player : tests) {
+            Executable functionCall = () -> board.addMove(player, new Position(0, 1));
+            assertThrows(InvalidPlayerException.class, functionCall, "Should throw InvalidPlayerException!");
+        }
+    }
 }
