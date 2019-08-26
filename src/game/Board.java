@@ -35,6 +35,10 @@ public class Board {
         if (grid[x][y] != 0)
             throw new IllegalArgumentException("Chosen position is already filled!");
 
+        if (player < 1 || player > 3) {
+            throw new InvalidPlayerException("Player number should be between 1 and 3!");
+        }
+
         grid[pos.getX()][pos.getY()] = player;
     }
 
