@@ -50,7 +50,7 @@ public class GameController {
                 Position move = Position.parse(input);
                 board.addMove(players[currentP], move);
                 askForInput = false;
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | PositionOutOfBoundsException e) {
                 System.out.println(e.getMessage());
                 System.out.println("Player " + players[currentP] + ", make a different move!");
                 // Will ask for input again
