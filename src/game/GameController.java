@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class GameController {
     private Board board;
     private BoardPrinter printer;
-    private PlayerManager players;
+    private PlayerManager playerManager;
     private Scanner scanner;
 
     public GameController(Board board, BoardPrinter printer) {
@@ -13,11 +13,11 @@ public class GameController {
         this.printer = printer;
         scanner = new Scanner(System.in);
 
-        players = new PlayerManager();
+        playerManager = new PlayerManager();
     }
 
     public void play() {
-        int player = players.getCurrentPlayer();
+        int player = playerManager.currentPlayer();
         System.out.println("First to play is player " + player);
         showBoard();
 
@@ -31,7 +31,7 @@ public class GameController {
                 break;
             }
 
-            player = players.getNextPlayer();
+            player = playerManager.nextPlayer();
         }
 
         System.out.println("Game over!");

@@ -12,15 +12,20 @@ public class PlayerManager {
         turn = 0;
     }
 
-    public int getCurrentPlayer() {
+    public int currentPlayer() {
         return players[turn];
     }
 
-    public int getNextPlayer() {
+    public int nextPlayer() {
         turn++;
         if (turn == players.length) turn = 0;
 
         return players[turn];
+    }
+
+    // Only testing purpose
+    public void setPlayers(int[] players) {
+        this.players = players;
     }
 
     // Implementing Fisher–Yates shuffle
