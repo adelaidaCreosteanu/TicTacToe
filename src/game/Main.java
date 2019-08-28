@@ -30,9 +30,10 @@ public class Main {
         System.out.println("    | |   [  | / /'`\\]     | |   `'_\\ : / /'`\\]     | |  / .'`\\ \\/ /__\\\\  .'____.'  | |    | | ");
         System.out.println("   _| |_   | | | \\__.     _| |_  // | |,| \\__.     _| |_ | \\__. || \\__., / /_____  _|  `--'  | ");
         System.out.println("  |_____| [___]'.___.'   |_____| \\'-;__/'.___.'   |_____| '.__.'  '.__.' |_______|(_)'.____.'  \n");
-        System.out.println("How to play:");
-        System.out.println("You make a move by deciding on the coordinates of your next mark.");
-        System.out.println("Please put the row number first, then a comma, then the column number.");
-        System.out.println("Numbering starts from 1.\n");
+        System.out.println("How to play:\n" + "The three players take turns making moves on the grid.\n" +
+                "You can win by filling in a whole row, column or diagonal.\n\n" +
+                "Please choose an empty position in the format: [row number], [column number]\n" +
+                "Numbering starts with 1 from the top left corner. So to make a move in the top left corner,\n" +
+                "you would write: 1,1\n");
     }
 }
