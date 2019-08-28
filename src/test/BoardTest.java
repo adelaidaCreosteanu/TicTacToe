@@ -1,9 +1,6 @@
 package test;
 
-import game.Board;
-import game.InvalidPlayerException;
-import game.Position;
-import game.PositionOutOfBoundsException;
+import game.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,8 +35,9 @@ class BoardTest {
         Position[] tests = new Position[]{new Position(-3, 2), new Position(9, 3), new Position(5, 5)};
 
         for (Position input : tests) {
-            Executable functionCall = () -> board.addMove(1, input);
-            assertThrows(PositionOutOfBoundsException.class, functionCall, "Should throw PositionOutOfBoundsException!");
+            Executable functionCall = () -> board.addMove(Player.ONE, input);
+            assertThrows(PositionOutOfBoundsException.class, functionCall, "Adding a move to an out of bound " +
+                    "position should throw PositionOutOfBoundsException!");
         }
     }
 
@@ -50,30 +48,16 @@ class BoardTest {
 
         // Same Position object
         Position pos = new Position(5, 5);
-        board.addMove(1, pos);
-        Executable functionCall = () -> board.addMove(1, pos);
-        assertThrows(IllegalArgumentException.class, functionCall, "Should throw IllegalArgumentException!");
+        board.addMove(Player.ONE, pos);
+        Executable functionCall = () -> board.addMove(Player.ONE, pos);
+        assertThrows(IllegalArgumentException.class, functionCall, "Adding a move to an already filled position " +
+                "should throw IllegalArgumentException!");
 
         // Different object with same values
-        board.addMove(2, new Position(2, 3));
-        functionCall = () -> board.addMove(3, new Position(2, 3));
-        assertThrows(IllegalArgumentException.class, functionCall, "Should throw IllegalArgumentException!");
-    }
-
-    @Test
-    @DisplayName("Throw InvalidPlayerException")
-    void throwInvalidPlayerException() {
-        Board board = new Board(4);
-
-        int[] tests = new int[]{-1, 0, 4, 30};
-
-        for (int player : tests) {
-            Executable functionCall = () -> board.addMove(player, new Position(0, 1));
-            assertThrows(InvalidPlayerException.class, functionCall, "Should throw InvalidPlayerException!");
-
-            functionCall = () -> board.hasWon(player);
-            assertThrows(InvalidPlayerException.class, functionCall, "Should throw InvalidPlayerException!");
-        }
+        board.addMove(Player.TWO, new Position(2, 3));
+        functionCall = () -> board.addMove(Player.AI, new Position(2, 3));
+        assertThrows(IllegalArgumentException.class, functionCall, "Adding a move to an already filled position " +
+                "should throw IllegalArgumentException!");
     }
 
     @Test
@@ -81,20 +65,27 @@ class BoardTest {
     void hasWonTrue() {
         Board board = new Board(3);
 
-        int[][][] tests = new int[4][3][3];
-        tests[0] = new int[][]{{1, 1, 1}, {2, 3, 0}, {0, 3, 2}};  // row
-        tests[1] = new int[][]{{1, 2, 3}, {1, 3, 0}, {1, 0, 2}};  // column
-        tests[2] = new int[][]{{1, 2, 3}, {2, 1, 0}, {3, 2, 1}};  // primary diagonal
-        tests[3] = new int[][]{{2, 3, 1}, {3, 1, 2}, {1, 0, 0}};  // secondary diagonal
+        Player[][][] tests = new Player[4][][];
+        tests[0] = new Player[][]{{Player.ONE, Player.ONE, Player.ONE}, // row
+                                  {Player.TWO, Player.AI, null}, 
+                                  {null, Player.AI, Player.TWO}};
+        tests[1] = new Player[][]{{Player.ONE, Player.TWO, Player.AI},  // column
+                                  {Player.ONE, Player.AI, null},
+                                  {Player.ONE, null, Player.TWO}};
+        tests[2] = new Player[][]{{Player.ONE, Player.TWO, Player.AI},  // primary diagonal
+                                  {Player.TWO, Player.ONE, null},
+                                  {Player.AI, Player.TWO, Player.ONE}};
+        tests[3] = new Player[][]{{Player.TWO, Player.AI, Player.ONE},  // secondary diagonal
+                                  {Player.AI, Player.ONE, Player.TWO},
+                                  {Player.ONE, null, null}};
 
-        for (int[][] grid : tests) {
+        for (Player[][] grid : tests) {
             board.setGrid(grid);
 
-            assertTrue(board.hasWon(1), "Should show win for Player 1!");
-            System.out.println("tested");
+            assertTrue(board.hasWon(Player.ONE), "Should show win for Player 1!");
 
-            assertFalse(board.hasWon(2), "Should not show win for Player 2!");
-            assertFalse(board.hasWon(3), "Should not show win for Player 3!");
+            assertFalse(board.hasWon(Player.TWO), "Should not show win for Player 2!");
+            assertFalse(board.hasWon(Player.AI), "Should not show win for Player 3!");
         }
     }
 
@@ -103,15 +94,21 @@ class BoardTest {
     void hasWonFalse() {
         Board board = new Board(3);
 
-        int[][][] tests = new int[3][][];
-        tests[0] = new int[][]{{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
-        tests[1] = new int[][]{{1, 2, 2}, {2, 2, 0}, {1, 0, 2}};
-        tests[2] = new int[][]{{1, 2, 2}, {2, 1, 2}, {0, 2, 0}};
+        Player[][][] tests = new Player[3][][];
+        tests[0] = new Player[][]{{null, null, null},
+                                  {null, null, null},
+                                  {null, null, null}};
+        tests[1] = new Player[][]{{Player.ONE, Player.TWO, Player.AI},
+                                  {Player.AI, Player.TWO, null},
+                                  {Player.ONE, null, Player.TWO}};
+        tests[2] = new Player[][]{{Player.ONE, Player.AI, Player.TWO},
+                                  {Player.TWO, null, Player.TWO},
+                                  {null, Player.TWO, null}};
 
-        for (int[][] grid : tests) {
+        for (Player[][] grid : tests) {
             board.setGrid(grid);
-            for (int i = 1; i < 4; i++) {
-                assertFalse(board.hasWon(i), "Should not show win for Player " + i);
+            for (Player p : Player.values()) {
+                assertFalse(board.hasWon(p), "Should not show win for Player " + p);
             }
         }
     }

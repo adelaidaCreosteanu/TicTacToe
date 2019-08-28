@@ -1,12 +1,12 @@
 package game;
 
 public class BoardPrinter {
-    private int[][] grid;
+    private Player[][] grid;
 
     public BoardPrinter() {
     }
 
-    public void print(int [][] grid) {
+    public void print(Player[][] grid) {
         this.grid = grid;
 
         int i, j;
@@ -24,7 +24,7 @@ public class BoardPrinter {
     }
 
     private void printRowCol(int i, int j) {
-        if (grid[i][j] == 0) {
+        if (grid[i][j] == null) {
             System.out.print("_|");
         } else {
             System.out.print(grid[i][j] + "|");
@@ -32,7 +32,7 @@ public class BoardPrinter {
     }
 
     private void printRowLastCol(int i, int j) {
-        if (grid[i][j] == 0) {
+        if (grid[i][j] == null) {
             System.out.println("_");
         } else {
             System.out.println(grid[i][j]);
@@ -40,7 +40,7 @@ public class BoardPrinter {
     }
 
     private void printLastRowCol(int i, int j) {
-        if (grid[i][j] == 0) {
+        if (grid[i][j] == null) {
             System.out.print(" |");
         } else {
             System.out.print(grid[i][j] + "|");
@@ -48,7 +48,7 @@ public class BoardPrinter {
     }
 
     private void printLastRowLastCol(int i, int j) {
-        if (grid[i][j] == 0) {
+        if (grid[i][j] == null) {
             System.out.println(" ");
         } else {
             System.out.println(grid[i][j]);

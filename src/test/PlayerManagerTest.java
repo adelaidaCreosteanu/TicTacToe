@@ -1,5 +1,6 @@
 package test;
 
+import game.Player;
 import game.PlayerManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,31 +15,31 @@ class PlayerManagerTest {
     @BeforeEach
     void setUp() {
         playerManager = new PlayerManager();
-        playerManager.setPlayers(new int[]{1, 2, 3});
+        playerManager.setPlayers(new Player[]{Player.ONE, Player.TWO, Player.AI});
     }
 
     @Test
     @DisplayName("Test currentPlayer()")
     void currentPlayer() {
-        int expected = 1;
-        int actual = playerManager.currentPlayer();
+        Player expected = Player.ONE;
+        Player actual = playerManager.currentPlayer();
         assertEquals(expected, actual, "Wrong current player!");
     }
 
     @Test
     @DisplayName("Test nextPlayer()")
     void nextPlayer() {
-        int expected = 2;
-        int actual = playerManager.nextPlayer();
+        Player expected = Player.TWO;
+        Player actual = playerManager.nextPlayer();
         assertEquals(expected, actual, "Wrong next player!");
     }
 
     @Test
     void wrapAround() {
-        int[] expected = new int[]{1, 2, 3, 1};
+        Player[] expected = new Player[]{Player.ONE, Player.TWO, Player.AI, Player.ONE};
 
         for (int i = 1; i < expected.length; i++) {
-            int actual = playerManager.nextPlayer();
+            Player actual = playerManager.nextPlayer();
             assertEquals(expected[i], actual, "Wrong next player!");
         }
     }

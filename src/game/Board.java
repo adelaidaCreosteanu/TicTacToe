@@ -1,7 +1,7 @@
 package game;
 
 public class Board {
-    private int[][] grid; // 0 means empty; 1,2,3 are the three players
+    private Player[][] grid;
     private int size;
 
     public Board(int gridSize) {
@@ -9,15 +9,15 @@ public class Board {
             throw new IllegalArgumentException("Playfield size has to be between 3 and 10");
 
         this.size = gridSize;
-        this.grid = new int[gridSize][gridSize];
+        this.grid = new Player[gridSize][gridSize];
     }
 
-    public int[][] getGrid() {
+    public Player[][] getGrid() {
         return grid;
     }
 
     // Only testing purpose
-    public void setGrid(int[][] newGrid) {
+    public void setGrid(Player[][] newGrid) {
         if (newGrid.length != size) throw new IllegalArgumentException("Cannot set differently sized grid!");
         grid = newGrid;
     }
@@ -27,7 +27,7 @@ public class Board {
 
         for (int i = 0; i < size && full; i++) {
             for (int j = 0; j < size; j++) {
-                if (grid[i][j] == 0) {
+                if (grid[i][j] == null) {
                     full = false;
                     break;
                 }
@@ -37,17 +37,14 @@ public class Board {
         return full;
     }
 
-    public void addMove(int player, Position pos) {
+    public void addMove(Player player, Position pos) {
         int x = pos.getX();
         int y = pos.getY();
 
         if (isOutOfBounds(x, y))
             throw new PositionOutOfBoundsException("Chosen position is out of playfield bounds!");
-        if (grid[x][y] != 0)
+        if (grid[x][y] != null)
             throw new IllegalArgumentException("Chosen position is already filled!");
-
-        if (player < 1 || player > 3)
-            throw new InvalidPlayerException("Player number should be between 1 and 3!");
 
         grid[pos.getX()][pos.getY()] = player;
     }
@@ -56,14 +53,11 @@ public class Board {
         return x < 0 || x >= size || y < 0 || y >= size;
     }
 
-    public boolean hasWon(int player) {
-        if (player < 1 || player > 3)
-            throw new InvalidPlayerException("Player number should be between 1 and 3!");
-
+    public boolean hasWon(Player player) {
         return rowOrColumnFilled(player) || diagonalFilled(player);
     }
 
-    private boolean rowOrColumnFilled(int p) {
+    private boolean rowOrColumnFilled(Player p) {
         for (int i = 0; i < size; i++) {
             if (checkRow(p, i)) return true;
             if (checkColumn(p, i)) return true;
@@ -71,32 +65,32 @@ public class Board {
         return false;
     }
 
-    private boolean checkRow(int p, int row) {
+    private boolean checkRow(Player p, int row) {
         for (int j = 0; j < size; j++) {
             if (grid[row][j] != p) return false;
         }
         return true;
     }
 
-    private boolean checkColumn(int p, int col) {
+    private boolean checkColumn(Player p, int col) {
         for (int i = 0; i < size; i++) {
             if (grid[i][col] != p) return false;
         }
         return true;
     }
 
-    private boolean diagonalFilled(int p) {
+    private boolean diagonalFilled(Player p) {
         return checkPrimaryDiagonal(p) || checkSecondaryDiagonal(p);
     }
 
-    private boolean checkPrimaryDiagonal(int p) {
+    private boolean checkPrimaryDiagonal(Player p) {
         for (int i = 0; i < size; i++) {
             if (grid[i][i] != p) return false;
         }
         return true;
     }
 
-    private boolean checkSecondaryDiagonal(int p) {
+    private boolean checkSecondaryDiagonal(Player p) {
         for (int i = 0; i < size; i++) {
             int j = size - i - 1;
             if (grid[i][j] != p) return false;

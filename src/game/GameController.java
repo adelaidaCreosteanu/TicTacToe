@@ -17,7 +17,7 @@ public class GameController {
     }
 
     public void play() {
-        int player = playerManager.currentPlayer();
+        Player player = playerManager.currentPlayer();
         System.out.println("First to play is player " + player);
         showBoard();
 
@@ -37,7 +37,7 @@ public class GameController {
         System.out.println("Game over!");
     }
 
-    private void addPlayerMove(int player) {
+    private void addPlayerMove(Player player) {
         boolean askForInput = true;
 
         while (askForInput) {
@@ -54,7 +54,7 @@ public class GameController {
         }
     }
 
-    private boolean hasWon(int player) {
+    private boolean hasWon(Player player) {
         return board.hasWon(player);
     }
 
