@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class GameController {
     private Board board;
     private BoardPrinter printer;
-    private int[] players;
+    private PlayerManager players;
     private Scanner scanner;
 
     public GameController(Board board, BoardPrinter printer) {
@@ -13,50 +13,49 @@ public class GameController {
         this.printer = printer;
         scanner = new Scanner(System.in);
 
-        players = new int[]{1, 2, 3};
+        players = new PlayerManager();
     }
 
     public void play() {
-        int currentP = 0;
-        System.out.println("First to play is player " + players[currentP]);
+        int player = players.getCurrentPlayer();
+        System.out.println("First to play is player " + player);
         showBoard();
 
         while (!gameTie()) {
-            System.out.println("Player " + players[currentP] + ", make your move!");
-            addPlayerMove(currentP);
+            System.out.println("Player " + player + ", make your move!");
+            addPlayerMove(player);
             showBoard();
 
-            if (hasWon(currentP)) {
-                System.out.println("Player " + players[currentP] + " has won!");
+            if (hasWon(player)) {
+                System.out.println("Player " + player + " has won!");
                 break;
             }
 
-            currentP++;
-            if (currentP == players.length) currentP = 0;
+            player = players.getNextPlayer();
         }
 
         System.out.println("Game over!");
     }
 
-    private void addPlayerMove(int currentP) {
+    private void addPlayerMove(int player) {
         boolean askForInput = true;
 
         while (askForInput) {
             String input = scanner.nextLine();
             try {
                 Position move = Position.parse(input);
-                board.addMove(players[currentP], move);
+                board.addMove(player, move);
                 askForInput = false;
             } catch (IllegalArgumentException | PositionOutOfBoundsException e) {
                 System.out.println(e.getMessage());
-                System.out.println("Player " + players[currentP] + ", make a different move!");
+                System.out.println("Player " + player + ", make a different move!");
                 // Will ask for input again
             }
         }
     }
 
-    private boolean hasWon(int currentP) {
-        return board.hasWon(players[currentP]);
+    private boolean hasWon(int player) {
+        return board.hasWon(player);
     }
 
     private boolean gameTie() {
