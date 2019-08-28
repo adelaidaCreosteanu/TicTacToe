@@ -1,10 +1,24 @@
 package game;
 
+import java.text.ParseException;
+
 public class Main {
     public static void main(String[] args) {
         printWelcome();
-        Board board = new Board(3);
-        BoardPrinter printer = new BoardPrinter();
+
+        ConfigReader configReader = null;
+        try {
+            configReader = new ConfigReader("config.txt");
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        int boardSize = configReader.getBoardSize();
+        Board board = new Board(boardSize);
+
+        String[] symbols = configReader.getSymbols();
+        BoardPrinter printer = new BoardPrinter(symbols);
+
         GameController game = new GameController(board, printer);
         game.play();
     }

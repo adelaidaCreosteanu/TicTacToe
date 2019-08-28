@@ -47,9 +47,10 @@ public class ConfigReader {
 
         try {
             int size = Integer.parseInt(parts[1].trim());
+            if (size < 3 || size > 10) throw new IllegalArgumentException("Board size should be between 3 and 10!");
             boardSize = size;
         } catch (NumberFormatException e) {
-            throw new ParseException("Could not parse size!", 0);
+            throw new ParseException("Size should be a number!", 0);
         }
     }
 

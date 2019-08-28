@@ -2,8 +2,10 @@ package game;
 
 public class BoardPrinter {
     private Player[][] grid;
+    private String[] symbols;
 
-    public BoardPrinter() {
+    public BoardPrinter(String[] symbols) {
+        this.symbols = symbols;
     }
 
     public void print(Player[][] grid) {
@@ -27,7 +29,8 @@ public class BoardPrinter {
         if (grid[i][j] == null) {
             System.out.print("_|");
         } else {
-            System.out.print(grid[i][j] + "|");
+            printSymbol(grid[i][j]);
+            System.out.print("|");
         }
     }
 
@@ -35,7 +38,7 @@ public class BoardPrinter {
         if (grid[i][j] == null) {
             System.out.println("_");
         } else {
-            System.out.println(grid[i][j]);
+            printSymbol(grid[i][j]);
         }
     }
 
@@ -43,7 +46,8 @@ public class BoardPrinter {
         if (grid[i][j] == null) {
             System.out.print(" |");
         } else {
-            System.out.print(grid[i][j] + "|");
+            printSymbol(grid[i][j]);
+            System.out.print("|");
         }
     }
 
@@ -51,7 +55,21 @@ public class BoardPrinter {
         if (grid[i][j] == null) {
             System.out.println(" ");
         } else {
-            System.out.println(grid[i][j]);
+            printSymbol(grid[i][j]);
+        }
+    }
+
+    private void printSymbol(Player p) {
+        switch (p) {
+            case ONE:
+                System.out.print(symbols[0]);
+                break;
+            case TWO:
+                System.out.print(symbols[1]);
+                break;
+            case AI:
+                System.out.print(symbols[2]);
+                break;
         }
     }
 }
