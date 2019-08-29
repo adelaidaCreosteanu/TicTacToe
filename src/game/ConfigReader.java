@@ -29,7 +29,7 @@ public class ConfigReader {
 
         try {
             List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
-            if (lines.size() < 2) throw new ParseException("Config file needs size and symbols attributes!", 0);
+            if (lines.size() < 2) throw new ParseException("Config file does not contain all necessary attributes!", 0);
             parseSize(lines.get(0));
             parseSymbols(lines.get(1));
         } catch (IOException e) {
@@ -38,15 +38,10 @@ public class ConfigReader {
     }
 
     private void parseSize(String line) throws ParseException {
-        String[] parts = line.split(":");
-        if (parts.length != 2)
-            throw new ParseException("Please write config pairs in the format: [name]:[attribute]", 0);
-
-        if (!parts[0].trim().equals("size"))
-            throw new ParseException("First attribute of config file should be \"size\"!", 0);
+        String unparsedSize = removeAttributeName(line, "size");
 
         try {
-            int size = Integer.parseInt(parts[1].trim());
+            int size = Integer.parseInt(unparsedSize.trim());
             if (size < 3 || size > 10) throw new IllegalArgumentException("Board size should be between 3 and 10!");
             boardSize = size;
         } catch (NumberFormatException e) {
@@ -55,18 +50,25 @@ public class ConfigReader {
     }
 
     private void parseSymbols(String line) throws ParseException {
-        String[] parts = line.split(":");
-        if (parts.length != 2)
-            throw new ParseException("Please write config pairs in the format: [name]:[attribute]", 1);
+        String unparsedSymbols = removeAttributeName(line, "symbols");
 
-        if (!parts[0].trim().equals("symbols"))
-            throw new ParseException("Second attribute of config file should be \"symbols\"!", 1);
-
-        String[] symbols = parts[1].split(",");
-        for (String s : symbols) {
-            s = s.trim();
-            if (s.length() > 1) throw new ParseException("Symbols should be a single character long!", 1);
+        String[] symbols = unparsedSymbols.split(",");
+        for (int i = 0; i < symbols.length; i++) {
+            symbols[i] = symbols[i].trim();
+            int nChars = symbols[i].length();
+            if (nChars > 1) throw new ParseException("Symbols should be a single character long!", 1);
         }
         this.symbols = symbols;
+    }
+
+    private String removeAttributeName(String line, String name) throws ParseException {
+        String[] parts = line.split(":");
+        if (parts.length != 2)
+            throw new ParseException("Please write config pairs in the format: [name]:[value]", 0);
+
+        if (!parts[0].trim().equals(name))
+            throw new ParseException("Config file should contain attribute named \"" + name + "\"!", 0);
+
+        return parts[1];
     }
 }
