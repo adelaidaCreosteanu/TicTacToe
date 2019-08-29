@@ -20,7 +20,9 @@ public class Main {
         String[] symbols = configReader.getSymbols();
         BoardPrinter printer = new BoardPrinter(symbols);
 
-        GameController game = new GameController(board, printer);
+        AI ai = new RandomAI(board);
+
+        GameController game = new GameController(board, printer, ai);
         game.play();
     }
 

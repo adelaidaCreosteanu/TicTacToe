@@ -5,14 +5,16 @@ import java.util.Scanner;
 public class GameController {
     private Board board;
     private BoardPrinter printer;
+    private AI ai;
     private PlayerManager playerManager;
     private Scanner scanner;
 
-    public GameController(Board board, BoardPrinter printer) {
+    public GameController(Board board, BoardPrinter printer, AI ai) {
         this.board = board;
         this.printer = printer;
-        scanner = new Scanner(System.in);
+        this.ai = ai;
 
+        scanner = new Scanner(System.in);
         playerManager = new PlayerManager();
     }
 
@@ -22,8 +24,7 @@ public class GameController {
         showBoard();
 
         while (!gameTie()) {
-            System.out.println("Player " + player + ", make your move!");
-            addPlayerMove(player);
+            addMove(player);
             showBoard();
 
             if (hasWon(player)) {
@@ -37,7 +38,19 @@ public class GameController {
         System.out.println("Game over!");
     }
 
-    private void addPlayerMove(Player player) {
+    private void addMove(Player player) {
+        Position move = null;
+        if (player == Player.AI) {
+            System.out.println("Player AI made the move:");
+            move = ai.makeMove();
+            board.addMove(player, move);
+        } else {
+            System.out.println("Player " + player + ", make your move!");
+            addMoveHumanPlayer(player);
+        }
+    }
+
+    private void addMoveHumanPlayer(Player player) {
         boolean askForInput = true;
 
         while (askForInput) {
@@ -68,5 +81,9 @@ public class GameController {
 
     public void setScanner(Scanner scanner) {
         this.scanner = scanner;
+    }
+
+    public void setPlayerManager(PlayerManager playerManager) {
+        this.playerManager = playerManager;
     }
 }
