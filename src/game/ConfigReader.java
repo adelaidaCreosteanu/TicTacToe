@@ -48,7 +48,7 @@ public class ConfigReader {
         for (int i = 0; i < symbols.length; i++) {
             symbols[i] = symbols[i].trim();
             int nChars = symbols[i].length();
-            if (nChars > 1) throw new ParseException("Symbols should be a single character long!", 1);
+            if (nChars > 1) throw new IllegalArgumentException("Symbols should be a single character long!");
         }
         this.symbols = symbols;
     }
