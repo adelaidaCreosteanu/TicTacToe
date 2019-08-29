@@ -39,6 +39,7 @@ public class BoardPrinter {
             System.out.println("_");
         } else {
             printSymbol(grid[i][j]);
+            System.out.println();
         }
     }
 
@@ -56,6 +57,7 @@ public class BoardPrinter {
             System.out.println(" ");
         } else {
             printSymbol(grid[i][j]);
+            System.out.println();
         }
     }
 
