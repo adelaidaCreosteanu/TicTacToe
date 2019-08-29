@@ -1,40 +1,32 @@
 package game;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.*;
 import java.text.ParseException;
-import java.util.List;
 
 public class ConfigReader {
     private int boardSize;
     private String[] symbols;
 
-    public ConfigReader(String configFile) throws ParseException {
-        parse(configFile);
+    public void readFile(String configFile) throws IOException, ParseException {
+        File filePath = new File(System.getProperty("user.dir"), configFile);
+        FileReader reader = new FileReader(filePath);
+        parse(reader);
+    }
+
+    public void parse(Reader reader) throws IOException, ParseException {
+        BufferedReader bReader = new BufferedReader(reader);
+        parseSize(bReader.readLine());
+        parseSymbols(bReader.readLine());
     }
 
     public int getBoardSize() {
-        return boardSize;
+        if (boardSize != 0) return boardSize;
+        throw new RuntimeException("Please call readFile() before getBoardSize()!");
     }
 
     public String[] getSymbols() {
-        return symbols;
-    }
-
-    private void parse(String file) throws ParseException {
-        Path path = Paths.get(System.getProperty("user.dir"), file);
-
-        try {
-            List<String> lines = Files.readAllLines(path, StandardCharsets.UTF_8);
-            if (lines.size() < 2) throw new ParseException("Config file does not contain all necessary attributes!", 0);
-            parseSize(lines.get(0));
-            parseSymbols(lines.get(1));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        if (symbols != null) return symbols;
+        throw new RuntimeException("Please call readFile() before getSymbols()!");
     }
 
     private void parseSize(String line) throws ParseException {

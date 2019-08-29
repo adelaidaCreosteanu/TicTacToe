@@ -1,15 +1,16 @@
 package game;
 
+import java.io.IOException;
 import java.text.ParseException;
 
 public class Main {
     public static void main(String[] args) {
         printWelcome();
 
-        ConfigReader configReader = null;
+        ConfigReader configReader = new ConfigReader();
         try {
-            configReader = new ConfigReader("config.txt");
-        } catch (ParseException e) {
+            configReader.readFile("config.txt");
+        } catch (ParseException | IOException e) {
             e.printStackTrace();
         }
 

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
 
+import java.io.IOException;
 import java.text.ParseException;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -15,7 +16,8 @@ public class ConfigReaderTest {
     @DisplayName("Parse correct")
     void parseCorrect() {
         try {
-            ConfigReader configReader = new ConfigReader("configCorrect.txt");
+            ConfigReader configReader = new ConfigReader();
+            configReader.readFile("configCorrect.txt");
             int actualSize = configReader.getBoardSize();
             assertEquals(4, actualSize, "Wrong board size parsed!");
 
@@ -25,7 +27,7 @@ public class ConfigReaderTest {
                 assertEquals(expectedSym[i], actualSym[i], "Wrong symbol parsed!");
             }
 
-        } catch (ParseException e) {
+        } catch (ParseException | IOException e) {
             e.printStackTrace();
         }
     }
@@ -33,10 +35,11 @@ public class ConfigReaderTest {
     @Test
     @DisplayName("Parse wrong format")
     void parseWrongFormat() {
+        ConfigReader configReader = new ConfigReader();
         String[] files = new String[]{"configWrongFormat1.txt", "configWrongFormat2.txt", "configWrongFormat3.txt"};
 
         for (String file : files) {
-            Executable functionCall = () -> new ConfigReader(file);
+            Executable functionCall = () -> configReader.readFile(file);
             assertThrows(ParseException.class, functionCall, "Wrong format file should throw ParseException!");
         }
     }
