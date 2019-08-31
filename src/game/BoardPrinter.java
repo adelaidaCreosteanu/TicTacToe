@@ -1,5 +1,10 @@
 package game;
 
+/**
+ * Prints a grid, including the configured player symbols (given in the
+ * constructor). It prints separating lines between cells of the grid.
+ * The horizontal lines ("_") are replaced with player symbols.
+ */
 public class BoardPrinter {
     private Player[][] grid;
     private String[] symbols;

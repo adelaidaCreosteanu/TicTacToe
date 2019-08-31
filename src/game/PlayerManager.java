@@ -2,6 +2,10 @@ package game;
 
 import java.util.Random;
 
+/**
+ * Keeps track of the order of players. PlayerManager first shuffles
+ * the players, so that the order is random.
+ */
 public class PlayerManager {
     private Player[] players;
     private int turn;
@@ -9,13 +13,22 @@ public class PlayerManager {
     public PlayerManager() {
         players = new Player[]{Player.ONE, Player.TWO, Player.AI};
         shufflePlayers();
-        turn = 0;
+        turn = 0;   // it's the first player's turn
     }
 
+    /**
+     * Returns the relevant player.
+     *
+     * @return the Player whose turn it is
+     */
     public Player currentPlayer() {
         return players[turn];
     }
 
+    /**
+     * Increments the turn and returns the relevant player.
+     * @return the Player who is next
+     */
     public Player nextPlayer() {
         turn++;
         if (turn == players.length) turn = 0;

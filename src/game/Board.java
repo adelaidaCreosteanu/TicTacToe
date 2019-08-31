@@ -1,5 +1,9 @@
 package game;
 
+/**
+ * Represents the playing field. Based on information stored in grid, a Board
+ * can add a move, check if a player has won, or check if the grid is full.
+ */
 public class Board {
     private Player[][] grid;
     private int size;
@@ -16,27 +20,16 @@ public class Board {
         return grid;
     }
 
-    // Only testing purpose
-    public void setGrid(Player[][] newGrid) {
-        if (newGrid.length != size) throw new IllegalArgumentException("Cannot set differently sized grid!");
-        grid = newGrid;
-    }
-
-    public boolean isFull() {
-        boolean full = true;
-
-        for (int i = 0; i < size && full; i++) {
-            for (int j = 0; j < size; j++) {
-                if (grid[i][j] == null) {
-                    full = false;
-                    break;
-                }
-            }
-        }
-
-        return full;
-    }
-
+    /**
+     * Adds a move for the player on the playing field. It will only accept
+     * the Position if it's within playfield bounds and it's not already filled.
+     *
+     * @param player the Player that is making this move
+     * @param pos the location of the move
+     * @throws PositionOutOfBoundsException if the position is not within
+     *                                      playfield borders
+     * @throws  IllegalArgumentException if the position is already filled
+     */
     public void addMove(Player player, Position pos) {
         int x = pos.getX();
         int y = pos.getY();
@@ -53,6 +46,13 @@ public class Board {
         return x < 0 || x >= size || y < 0 || y >= size;
     }
 
+    /**
+     * Checks whether this player has won the game.
+     *
+     * @param player the Player to check for
+     * @return true if a row, column, or diagonal is filled only with this
+     *          player's symbols, false otherwise.
+     */
     public boolean hasWon(Player player) {
         return rowOrColumnFilled(player) || diagonalFilled(player);
     }
@@ -96,5 +96,26 @@ public class Board {
             if (grid[i][j] != p) return false;
         }
         return true;
+    }
+
+    public boolean isFull() {
+        boolean full = true;
+
+        for (int i = 0; i < size && full; i++) {
+            for (int j = 0; j < size; j++) {
+                if (grid[i][j] == null) {
+                    full = false;
+                    break;
+                }
+            }
+        }
+
+        return full;
+    }
+
+    // Only testing purpose
+    public void setGrid(Player[][] newGrid) {
+        if (newGrid.length != size) throw new IllegalArgumentException("Cannot set differently sized grid!");
+        grid = newGrid;
     }
 }

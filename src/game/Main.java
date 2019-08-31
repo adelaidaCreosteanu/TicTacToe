@@ -3,6 +3,10 @@ package game;
 import java.io.IOException;
 import java.text.ParseException;
 
+/**
+ * This class contains the main function. After printing a welcome message,
+ * it creates all necessary classes and starts the game.
+ */
 public class Main {
     public static void main(String[] args) {
         printWelcome();

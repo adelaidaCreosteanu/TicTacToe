@@ -8,7 +8,10 @@ import org.junit.jupiter.api.function.Executable;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
+/**
+ * Tests that Board throws Exceptions in the correct conditions, and hasWon()
+ * functions correctly.
+ */
 class BoardTest {
 
     @Test

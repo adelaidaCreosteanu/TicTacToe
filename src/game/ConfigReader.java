@@ -3,6 +3,12 @@ package game;
 import java.io.*;
 import java.text.ParseException;
 
+/**
+ * Reads a config file and parses board size and symbols. ConfigReader can
+ * also parse directly from a Reader, which is convenient if physical files
+ * are not desired. The parsed board size and player symbols are accessed
+ * through getters.
+ */
 public class ConfigReader {
     private int boardSize;
     private String[] symbols;

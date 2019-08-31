@@ -2,6 +2,10 @@ package game;
 
 import java.util.Random;
 
+/**
+ * Represents an AI player that makes moves randomly. It extends the abstract
+ * class AI.
+ */
 public class RandomAI extends AI {
 
     public RandomAI(Board board) {

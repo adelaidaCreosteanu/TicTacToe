@@ -8,7 +8,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-
+/**
+ * Tests that PlayerManager returns the correct Player with currentPlayer()
+ * and nextPlayer(), including wrapping around and reaching the first Player
+ * again.
+ */
 class PlayerManagerTest {
     private PlayerManager playerManager;
 

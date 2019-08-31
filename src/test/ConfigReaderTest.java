@@ -12,6 +12,11 @@ import java.text.ParseException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests that ConfigReader parses correctly, throws ParseException if the file
+ * is in the wrong format, and throws IllegalArgumentException if the
+ * attributes are invalid.
+ */
 public class ConfigReaderTest {
     private ConfigReader configReader;
 

@@ -2,6 +2,12 @@ package game;
 
 import java.util.Scanner;
 
+/**
+ * GameController holds the main logic of the game. It pulls all the pieces
+ * together to create the gameplay. GameController gets input from human players
+ * and AI, creates Positions and gives them to the Board. It calls the
+ * BoardPrinter at relevant points and check the game-end conditions.
+ */
 public class GameController {
     private Board board;
     private BoardPrinter printer;
@@ -9,6 +15,14 @@ public class GameController {
     private PlayerManager playerManager;
     private Scanner scanner;
 
+    /**
+     * The constructor adds its arguments as private attributes and creates
+     * a Scanner and PlayerManager.
+     *
+     * @param board the Board this game will be played on
+     * @param printer the BoardPrinter to print the playing field
+     * @param ai the AI player
+     */
     public GameController(Board board, BoardPrinter printer, AI ai) {
         this.board = board;
         this.printer = printer;
@@ -18,6 +32,10 @@ public class GameController {
         playerManager = new PlayerManager();
     }
 
+    /**
+     * Calling this function starts the game. It checks for game-end conditions
+     * and adds moves to the Board.
+     */
     public void play() {
         Player player = playerManager.currentPlayer();
         System.out.println("First to play is player " + player);

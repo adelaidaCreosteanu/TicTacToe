@@ -1,7 +1,9 @@
 package game;
 
-import java.util.Objects;
-
+/**
+ * Represents a pair of coordinates on the playing field. A Position can be
+ * created through the constructor or through the static parse() function.
+ */
 public class Position {
     private int x, y;
 
@@ -18,6 +20,15 @@ public class Position {
         return y;
     }
 
+    /**
+     * Parses a Position from a String. It decrements each coordinate because
+     * the program uses 0-indexing.
+     *
+     * @param input the String containing a Position
+     * @return the Position
+     * @throws IllegalArgumentException if the input is not in the correct format
+     * @throws NumberFormatException if the input does not contain two numbers
+     */
     public static Position parse(String input) {
         String[] numbers = input.split(",");
 
@@ -32,7 +43,7 @@ public class Position {
             throw new NumberFormatException("Please choose a position in the format: [x coordinate], [y coordinate]");
         }
 
-        // subtract 1 because the users use 1 indexing, but the program uses 0 indexing
+        // subtract 1 because the users use 1-indexing, but the program uses 0-indexing
         return new Position(x - 1, y - 1);
     }
 
@@ -43,10 +54,5 @@ public class Position {
         Position position = (Position) o;
         return x == position.x &&
                 y == position.y;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(x, y);
     }
 }
