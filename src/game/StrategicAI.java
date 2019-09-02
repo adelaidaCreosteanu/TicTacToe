@@ -7,19 +7,19 @@ import java.util.Random;
  * the board state.
  */
 public class StrategicAI extends AI {
-    private int size;
     private Player[][] grid;
+    private int size;
     private PositionFinder finder;
 
     public StrategicAI(Board board) {
         super(board);
-        size = board.getGrid().length;
+        size = board.getSize();
     }
 
     @Override
     public Position makeMove() {
         grid = board.getGrid();
-        finder = new PositionFinder(grid);
+        finder = new PositionFinder(board);
 
         Position move = makeWin();
         if (move == null) move = makeBlock();

@@ -56,6 +56,10 @@ public class GameController {
         System.out.println("Game over!");
     }
 
+    private boolean gameTie() {
+        return board.isFull();
+    }
+
     private void addMove(Player player) {
         Position move = null;
         if (player == Player.AI) {
@@ -70,7 +74,6 @@ public class GameController {
 
     private void addMoveHumanPlayer(Player player) {
         boolean askForInput = true;
-
         while (askForInput) {
             String input = scanner.nextLine();
             try {
@@ -85,15 +88,11 @@ public class GameController {
         }
     }
 
+    private void showBoard() {
+        printer.print(board);
+    }
+
     private boolean hasWon(Player player) {
         return board.hasWon(player);
-    }
-
-    private boolean gameTie() {
-        return board.isFull();
-    }
-
-    private void showBoard() {
-        printer.print(board.getGrid());
     }
 }

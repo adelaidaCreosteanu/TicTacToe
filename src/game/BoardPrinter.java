@@ -13,18 +13,19 @@ public class BoardPrinter {
         this.symbols = symbols;
     }
 
-    public void print(Player[][] grid) {
-        this.grid = grid;
+    public void print(Board board) {
+        this.grid = board.getGrid();
+        int size = board.getSize();
 
         int i, j;
-        for (i = 0; i < grid.length - 1; i++) {
-            for (j = 0; j < grid.length - 1; j++) {
+        for (i = 0; i < size - 1; i++) {
+            for (j = 0; j < size - 1; j++) {
                 printRowCol(i, j);
             }
             printRowLastCol(i, j);
         }
 
-        for (j = 0; j < grid.length - 1; j++) {
+        for (j = 0; j < size - 1; j++) {
             printLastRowCol(i, j);
         }
         printLastRowLastCol(i, j);

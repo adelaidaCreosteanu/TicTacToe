@@ -15,14 +15,15 @@ public class RandomAI extends AI {
     @Override
     public Position makeMove() {
         Player[][] grid = board.getGrid();
+        int size = board.getSize();
 
         Random rnd = new Random();
         Position move = null;
 
         while (move == null) {
             // pick a random position
-            int x = rnd.nextInt(grid.length);
-            int y = rnd.nextInt(grid.length);
+            int x = rnd.nextInt(size);
+            int y = rnd.nextInt(size);
 
             // if it's empty, make this move
             if (grid[x][y] == null) move = new Position(x, y);

@@ -11,7 +11,7 @@ public class PlayerManager {
     private int turn;
 
     public PlayerManager() {
-        players = new Player[]{Player.ONE, Player.TWO, Player.AI};
+        players = Player.values();
         shufflePlayers();
         turn = 0;   // it's the first player's turn
     }

@@ -20,6 +20,10 @@ public class Board {
         return grid;
     }
 
+    public int getSize() {
+        return size;
+    }
+
     /**
      * Adds a move for the player on the playing field. It will only accept
      * the Position if it's within playfield bounds and it's not already filled.

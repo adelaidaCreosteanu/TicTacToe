@@ -7,9 +7,9 @@ public class PositionFinder {
     private Player[][] grid;
     private int size;
 
-    public PositionFinder(Player[][] grid) {
-        this.grid = grid;
-        this.size = grid.length;
+    public PositionFinder(Board board) {
+        this.grid = board.getGrid();
+        this.size = board.getSize();
     }
 
     public Position fillRowOrColumn() {
