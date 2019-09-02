@@ -12,6 +12,7 @@ public class RandomAI extends AI {
         super(board);
     }
 
+    @Override
     public Position makeMove() {
         Player[][] grid = board.getGrid();
 

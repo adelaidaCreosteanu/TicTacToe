@@ -24,7 +24,8 @@ public class Main {
         String[] symbols = configReader.getSymbols();
         BoardPrinter printer = new BoardPrinter(symbols);
 
-        AI ai = new RandomAI(board);
+//        AI ai = new RandomAI(board);
+        AI ai = new StrategicAI(board);
 
         GameController game = new GameController(board, printer, ai);
         game.play();
