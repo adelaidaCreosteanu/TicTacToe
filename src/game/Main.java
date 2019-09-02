@@ -15,6 +15,7 @@ public class Main {
         try {
             configReader.readFile("config.txt");
         } catch (ParseException | IOException e) {
+            System.err.println(e.getMessage());
             e.printStackTrace();
         }
 

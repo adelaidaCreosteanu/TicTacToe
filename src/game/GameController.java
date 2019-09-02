@@ -19,9 +19,9 @@ public class GameController {
      * The constructor adds its arguments as private attributes and creates
      * a Scanner and PlayerManager.
      *
-     * @param board the Board this game will be played on
+     * @param board   the Board this game will be played on
      * @param printer the BoardPrinter to print the playing field
-     * @param ai the AI player
+     * @param ai      the AI player
      */
     public GameController(Board board, BoardPrinter printer, AI ai) {
         this.board = board;
@@ -95,13 +95,5 @@ public class GameController {
 
     private void showBoard() {
         printer.print(board.getGrid());
-    }
-
-    public void setScanner(Scanner scanner) {
-        this.scanner = scanner;
-    }
-
-    public void setPlayerManager(PlayerManager playerManager) {
-        this.playerManager = playerManager;
     }
 }

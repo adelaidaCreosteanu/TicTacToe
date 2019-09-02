@@ -25,10 +25,10 @@ public class Board {
      * the Position if it's within playfield bounds and it's not already filled.
      *
      * @param player the Player that is making this move
-     * @param pos the location of the move
+     * @param pos    the location of the move
      * @throws PositionOutOfBoundsException if the position is not within
      *                                      playfield borders
-     * @throws  IllegalArgumentException if the position is already filled
+     * @throws IllegalArgumentException     if the position is already filled
      */
     public void addMove(Player player, Position pos) {
         int x = pos.getX();
@@ -51,7 +51,7 @@ public class Board {
      *
      * @param player the Player to check for
      * @return true if a row, column, or diagonal is filled only with this
-     *          player's symbols, false otherwise.
+     * player's symbols, false otherwise.
      */
     public boolean hasWon(Player player) {
         return rowOrColumnFilled(player) || diagonalFilled(player);

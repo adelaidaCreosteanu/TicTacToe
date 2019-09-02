@@ -27,6 +27,7 @@ public class PlayerManager {
 
     /**
      * Increments the turn and returns the relevant player.
+     *
      * @return the Player who is next
      */
     public Player nextPlayer() {

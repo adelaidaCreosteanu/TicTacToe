@@ -27,7 +27,7 @@ public class Position {
      * @param input the String containing a Position
      * @return the Position
      * @throws IllegalArgumentException if the input is not in the correct format
-     * @throws NumberFormatException if the input does not contain two numbers
+     * @throws NumberFormatException    if the input does not contain two numbers
      */
     public static Position parse(String input) {
         String[] numbers = input.split(",");
