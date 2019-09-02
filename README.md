@@ -4,10 +4,28 @@ This is an extended version of the classic Tic-tac-toe game. Two players play ag
 ## How to run
 1. Clone or download the code from GitHub
 2. Open a command prompt in the folder of the project (TicTacToe, not src)
-3. Ensure there is a config.txt with the desired settings
+3. Ensure there is a config.txt with the desired settings. Check format of config file below.
 4. Compile with `javac src/game/*.java -d out/production/TicTacToe/`
 5. Run with `java -classpath out/production/TicTacToe game.Main`
 6. Play the game!
+
+## Config file
+The expected format is:
+```
+size:[NUMBER]
+symbols:[SYMBOL],[SYMBOL],[SYMBOL]
+ai:[DIFFICULTY]
+```
+* `[NUMBER]` has to be between 3 and 10 (inclusive)
+* `[SYMBOL]` is a one character player symbol
+* `[DIFFICULTY]` is either "easy" or "hard"
+
+For example, a valid config file is:
+```
+size: 3
+symbols: X, Y, Z
+ai: hard
+```
 
 ## Software design
 I have tried to follow OOP and Clean Code principles. I have split responsibility to different classes.
