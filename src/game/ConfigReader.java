@@ -12,6 +12,7 @@ import java.text.ParseException;
 public class ConfigReader {
     private int boardSize;
     private String[] symbols;
+    private AIDifficulty difficulty;
 
     public void readFile(String configFile) throws IOException, ParseException {
         File filePath = new File(System.getProperty("user.dir"), configFile);
@@ -23,6 +24,7 @@ public class ConfigReader {
         BufferedReader bReader = new BufferedReader(reader);
         parseSize(bReader.readLine());
         parseSymbols(bReader.readLine());
+        parseDifficulty(bReader.readLine());
     }
 
     public int getBoardSize() {
@@ -33,6 +35,11 @@ public class ConfigReader {
     public String[] getSymbols() {
         if (symbols != null) return symbols;
         throw new RuntimeException("Please call readFile() before getSymbols()!");
+    }
+
+    public AIDifficulty getDifficulty() {
+        if (difficulty != null) return difficulty;
+        throw new RuntimeException("Please call readFile() before getDifficulty()!");
     }
 
     private void parseSize(String line) throws ParseException {
@@ -57,6 +64,22 @@ public class ConfigReader {
             if (nChars > 1) throw new IllegalArgumentException("Symbols should be a single character long!");
         }
         this.symbols = symbols;
+    }
+
+    private void parseDifficulty(String line) throws ParseException {
+        String unparsedDiff = removeAttributeName(line, "ai");
+        unparsedDiff = unparsedDiff.trim().toLowerCase();
+
+        switch (unparsedDiff) {
+            case "easy":
+                difficulty = AIDifficulty.EASY;
+                break;
+            case "hard":
+                difficulty = AIDifficulty.HARD;
+                break;
+            default:
+                throw new IllegalArgumentException("AI difficulty should be one of: easy, hard.");
+        }
     }
 
     private String removeAttributeName(String line, String name) throws ParseException {

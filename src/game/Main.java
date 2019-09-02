@@ -11,22 +11,24 @@ public class Main {
     public static void main(String[] args) {
         printWelcome();
 
-        ConfigReader configReader = new ConfigReader();
+        ConfigReader configs = new ConfigReader();
         try {
-            configReader.readFile("config.txt");
+            configs.readFile("config.txt");
         } catch (ParseException | IOException e) {
             System.err.println(e.getMessage());
             e.printStackTrace();
         }
 
-        int boardSize = configReader.getBoardSize();
+        int boardSize = configs.getBoardSize();
         Board board = new Board(boardSize);
 
-        String[] symbols = configReader.getSymbols();
+        String[] symbols = configs.getSymbols();
         BoardPrinter printer = new BoardPrinter(symbols);
 
-//        AI ai = new RandomAI(board);
-        AI ai = new StrategicAI(board);
+        AI ai = null;
+        if (configs.getDifficulty() == AIDifficulty.EASY)
+            ai = new RandomAI(board);
+        else ai = new StrategicAI(board);
 
         GameController game = new GameController(board, printer, ai);
         game.play();

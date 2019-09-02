@@ -28,7 +28,7 @@ public class ConfigReaderTest {
     @Test
     @DisplayName("Parse correct")
     void parseCorrect() {
-        String[] tests = new String[]{"size:4\nsymbols:X,O,A\n", "size : 10 \n symbols:1,  3  , I"};
+        String[] tests = new String[]{"size:4\nsymbols:X,O,A\nai:easy", " size : 10 \n symbols:1,  3  , I\n  ai: hard"};
         int[] sizes = new int[]{4, 10};
         String[][] symbols = new String[][]{{"X", "O", "A"}, {"1", "3", "I"}};
 
@@ -53,7 +53,7 @@ public class ConfigReaderTest {
     @Test
     @DisplayName("Parse wrong format")
     void parseWrongFormat() {
-        String[] tests = new String[]{"foobar", "size foo\nsymbols bar", "size:foo\nsymbols:bar"};
+        String[] tests = new String[]{"foobar", "size foo\nsymbols bar\n ai ", "size:foo\nsymbols:bar\nai: hey"};
 
         for (String test : tests) {
             Executable functionCall = () -> configReader.parse(new StringReader(test));
@@ -64,7 +64,8 @@ public class ConfigReaderTest {
     @Test
     @DisplayName("Throw IllegalArgumentException")
     void throwIllegalArgumentException() {
-        String[] tests = new String[]{"size:2\nsymbols:X,O,A\n", "size:11\nsymbols:1,3,I", "size:5\nsymbols:1,3,AI"};
+        String[] tests = new String[]{"size:2\nsymbols:X,O,A\n", "size:11\nsymbols:1,3,I", "size:5\nsymbols:1,3,AI",
+                "size:5\nsymbols:X,O,A\nai:foo"};
 
         for (String test : tests) {
             Executable functionCall = () -> configReader.parse(new StringReader(test));
