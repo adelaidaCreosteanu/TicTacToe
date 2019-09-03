@@ -50,6 +50,21 @@ public class Board {
         return x < 0 || x >= size || y < 0 || y >= size;
     }
 
+    public boolean isFull() {
+        boolean full = true;
+
+        for (int i = 0; i < size && full; i++) {
+            for (int j = 0; j < size; j++) {
+                if (grid[i][j] == null) {
+                    full = false;
+                    break;
+                }
+            }
+        }
+
+        return full;
+    }
+
     /**
      * Checks whether this player has won the game.
      *
@@ -100,21 +115,6 @@ public class Board {
             if (grid[i][j] != p) return false;
         }
         return true;
-    }
-
-    public boolean isFull() {
-        boolean full = true;
-
-        for (int i = 0; i < size && full; i++) {
-            for (int j = 0; j < size; j++) {
-                if (grid[i][j] == null) {
-                    full = false;
-                    break;
-                }
-            }
-        }
-
-        return full;
     }
 
     // Only testing purpose
